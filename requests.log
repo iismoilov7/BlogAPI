@@ -1,0 +1,56 @@
+2024-12-06 14:57:13.515 | INFO     | logging:callHandlers:1762 - Uvicorn running on http://127.0.0.1:7777 (Press CTRL+C to quit)
+2024-12-06 14:57:13.515 | INFO     | logging:callHandlers:1762 - Started reloader process [317795] using StatReload
+2024-12-06 14:58:52.862 | WARNING  | logging:callHandlers:1762 - StatReload detected changes in 'app/main.py'. Reloading...
+2024-12-06 14:59:02.932 | WARNING  | logging:callHandlers:1762 - StatReload detected changes in 'app/main.py'. Reloading...
+2024-12-06 14:59:07.271 | INFO     | logging:callHandlers:1762 - Stopping reloader process [317795]
+2024-12-06 14:59:32.676 | INFO     | logging:callHandlers:1762 - Uvicorn running on http://127.0.0.1:7777 (Press CTRL+C to quit)
+2024-12-06 14:59:32.676 | INFO     | logging:callHandlers:1762 - Started reloader process [323459] using StatReload
+2024-12-06 14:59:32.990 | INFO     | app.main:lifespan:19 - Starting up...
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:13 - GET http://127.0.0.1:7777/docs
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:15 - Params:
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:21 - Headers:
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:23 - 	host: 127.0.0.1:7777
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:23 - 	user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0
+2024-12-06 14:59:59.648 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-language: en-US,en;q=0.5
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-encoding: gzip, deflate, br, zstd
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	connection: keep-alive
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	cookie: _ga_ED940RB4R4=GS1.1.1733477504.11.0.1733477614.0.0.0; _ga=GA1.1.702069980.1731674148
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	upgrade-insecure-requests: 1
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-dest: document
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-mode: navigate
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-site: none
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-user: ?1
+2024-12-06 14:59:59.649 | DEBUG    | app.middlewares.log:log_middle:23 - 	priority: u=0, i
+2024-12-06 15:00:00.211 | DEBUG    | app.middlewares.log:log_middle:13 - GET http://127.0.0.1:7777/openapi.json
+2024-12-06 15:00:00.211 | DEBUG    | app.middlewares.log:log_middle:15 - Params:
+2024-12-06 15:00:00.211 | DEBUG    | app.middlewares.log:log_middle:21 - Headers:
+2024-12-06 15:00:00.211 | DEBUG    | app.middlewares.log:log_middle:23 - 	host: 127.0.0.1:7777
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept: application/json,*/*
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-language: en-US,en;q=0.5
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-encoding: gzip, deflate, br, zstd
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	referer: http://127.0.0.1:7777/docs
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	connection: keep-alive
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	cookie: _ga_ED940RB4R4=GS1.1.1733477504.11.0.1733477614.0.0.0; _ga=GA1.1.702069980.1731674148
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-dest: empty
+2024-12-06 15:00:00.212 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-mode: cors
+2024-12-06 15:00:00.213 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-site: same-origin
+2024-12-06 15:00:00.213 | DEBUG    | app.middlewares.log:log_middle:23 - 	priority: u=4
+2024-12-06 15:00:19.932 | DEBUG    | app.middlewares.log:log_middle:13 - GET http://127.0.0.1:7777/blog
+2024-12-06 15:00:19.932 | DEBUG    | app.middlewares.log:log_middle:15 - Params:
+2024-12-06 15:00:19.932 | DEBUG    | app.middlewares.log:log_middle:21 - Headers:
+2024-12-06 15:00:19.932 | DEBUG    | app.middlewares.log:log_middle:23 - 	host: 127.0.0.1:7777
+2024-12-06 15:00:19.933 | DEBUG    | app.middlewares.log:log_middle:23 - 	user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0
+2024-12-06 15:00:19.933 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept: application/json
+2024-12-06 15:00:19.933 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-language: en-US,en;q=0.5
+2024-12-06 15:00:19.934 | DEBUG    | app.middlewares.log:log_middle:23 - 	accept-encoding: gzip, deflate, br, zstd
+2024-12-06 15:00:19.934 | DEBUG    | app.middlewares.log:log_middle:23 - 	referer: http://127.0.0.1:7777/docs
+2024-12-06 15:00:19.934 | DEBUG    | app.middlewares.log:log_middle:23 - 	connection: keep-alive
+2024-12-06 15:00:19.934 | DEBUG    | app.middlewares.log:log_middle:23 - 	cookie: _ga_ED940RB4R4=GS1.1.1733477504.11.0.1733477614.0.0.0; _ga=GA1.1.702069980.1731674148
+2024-12-06 15:00:19.934 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-dest: empty
+2024-12-06 15:00:19.935 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-mode: cors
+2024-12-06 15:00:19.935 | DEBUG    | app.middlewares.log:log_middle:23 - 	sec-fetch-site: same-origin
+2024-12-06 15:00:19.935 | DEBUG    | app.middlewares.log:log_middle:23 - 	priority: u=0
+2024-12-06 15:05:04.960 | INFO     | app.main:lifespan:23 - Shutting down...
+2024-12-06 15:05:04.963 | INFO     | logging:callHandlers:1762 - Stopping reloader process [323459]

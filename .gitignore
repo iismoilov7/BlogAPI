@@ -1,0 +1,18 @@
+# Virtual environments
+.venv
+venv
+
+# Env files
+.env
+
+
+# Cache
+__pycache__
+app/__pycache__
+
+# Volumes
+volumes/*
+
+# Config files
+.idea/
+.vscode/
