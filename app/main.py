@@ -6,7 +6,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from contextlib import asynccontextmanager
 
 from app.database.db import init_db
-from app.middlewares import log_middle, csrf_protection
+from app.middlewares import log_middle
 from app.config import (
     REDOC_URL,
     DOCS_URL,
@@ -17,7 +17,7 @@ from app.config import (
     JWT_PRIVATE_KEY_PATH,
     JWT_PUBLIC_KEY_PATH,
     JWT_ALGORITHM,
-    ACCESS_TOKEN_EXPIRES_MINUTES
+    ACCESS_TOKEN_EXPIRES_MINUTES,
 )
 from app.routers import blog, auth
 
@@ -31,12 +31,13 @@ async def lifespan(app: FastAPI):
     authx_config.JWT_PUBLIC_KEY = JWT_PUBLIC_KEY_PATH.read_text().strip()
     authx_config.JWT_ALGORITHM = JWT_ALGORITHM
     authx_config.JWT_ACCESS_COOKIE_NAME = "access_token"
-    authx_config.JWT_ACCESS_CSRF_COOKIE_NAME = "csrf_token"
-    authx_config.JWT_TOKEN_LOCATION = ["cookies"]
+    authx_config.JWT_TOKEN_LOCATION = ["cookies", "headers"]
     authx_config.JWT_ACCESS_TOKEN_EXPIRES = ACCESS_TOKEN_EXPIRES_MINUTES
-    
+    authx_config.JWT_COOKIE_CSRF_PROTECT = False
+    authx_config.JWT_CSRF_IN_COOKIES = False
+
     app.state.security = AuthX(authx_config)
-    
+
     try:
         yield
     finally:
@@ -47,7 +48,6 @@ app = FastAPI(lifespan=lifespan, docs_url=DOCS_URL, redoc_url=REDOC_URL)
 
 # Add the middleware to the app
 app.add_middleware(BaseHTTPMiddleware, dispatch=log_middle)
-app.add_middleware(BaseHTTPMiddleware, dispatch=csrf_protection)
 
 app.add_middleware(
     CORSMiddleware,
@@ -63,13 +63,9 @@ app.include_router(auth.router)
 if __name__ == "__main__":
     from uvicorn_loguru_integration import run_uvicorn_loguru
     import uvicorn
-    
+
     run_uvicorn_loguru(
         uvicorn.Config(
-            "app.main:app",
-            host=HOST,
-            port=PORT,
-            reload=DEBUG,
-            log_level="debug"
+            "app.main:app", host=HOST, port=PORT, reload=DEBUG, log_level="debug"
         )
     )

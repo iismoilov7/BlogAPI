@@ -11,7 +11,7 @@ BASE_DIR = Path(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__f
 JWT_ALGORITHM = "HS256"
 JWT_PRIVATE_KEY_PATH = BASE_DIR / "certs" / "jwt-private.pem"
 JWT_PUBLIC_KEY_PATH = BASE_DIR / "certs" / "jwt-public.pem"
-ACCESS_TOKEN_EXPIRES_MINUTES = timedelta(minutes=3)
+ACCESS_TOKEN_EXPIRES_MINUTES = timedelta(days=7)
 SALT = os.getenv("SALT")
 
 # Configure CORS origins based on the environment
