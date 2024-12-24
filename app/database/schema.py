@@ -1,8 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, func, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-import sqlalchemy.dialects.postgresql as pg
-import uuid
+from sqladmin import ModelView
 
 Base = declarative_base()
 
@@ -24,8 +23,6 @@ class User(Base):
     def __repr__(self):
         return f"<User(id={self.id}, username={self.username}, name={self.name})>"
 
-
-
 class Categories(Base):
     __tablename__ = 'categories'
 
@@ -44,6 +41,7 @@ class Blog(Base):
     __tablename__ = 'blog'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    preview_url = Column(String, nullable=False)
     title_ru = Column(String, nullable=False)
     title_en = Column(String, nullable=False)
     content_ru = Column(String, nullable=False)
@@ -57,3 +55,15 @@ class Blog(Base):
     
     def __repr(self):
         return f"<Blog(id={self.id}, title={self.title_en}, category={self.category_id})>"
+
+
+
+class UserAdmin(ModelView, model=User):
+    column_list = [User.id, User.name]
+    
+    
+class CategoriesAdmin(ModelView, model=Categories):
+    column_list = [Categories.id, Categories.name_en]
+    
+class BlogAdmin(ModelView, model=Blog):
+    column_list = [Blog.id, Blog.title_en, Blog.category_id]

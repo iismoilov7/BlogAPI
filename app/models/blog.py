@@ -10,6 +10,7 @@ class User(BaseModel):
 
 
 class CreateArticle(BaseModel):
+    preview_url: str
     title_ru: str
     title_en: str
     content_ru: str
@@ -19,6 +20,7 @@ class CreateArticle(BaseModel):
 
 class Aritcle(BaseModel):
     id: int
+    preview_url: str
     title: str
     content: str
     created_at: str

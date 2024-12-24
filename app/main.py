@@ -4,9 +4,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 from contextlib import asynccontextmanager
+from sqladmin import Admin
 
-from app.database.db import init_db
-from app.middlewares import log_middle
+from app.database.schema import BlogAdmin, UserAdmin, CategoriesAdmin
+from app.database.db import init_db, engine
+from app.middlewares import log_middle, AdminAuthMiddleware
 from app.config import (
     REDOC_URL,
     DOCS_URL,
@@ -18,14 +20,18 @@ from app.config import (
     JWT_PUBLIC_KEY_PATH,
     JWT_ALGORITHM,
     ACCESS_TOKEN_EXPIRES_MINUTES,
+    ADMIN_URL,
+    LOGO_URL
 )
 from app.routers import blog, auth
+
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting up...")
     await init_db()
+    
     authx_config = AuthXConfig()
     authx_config.JWT_SECRET_KEY = JWT_PRIVATE_KEY_PATH.read_text().strip()
     authx_config.JWT_PUBLIC_KEY = JWT_PUBLIC_KEY_PATH.read_text().strip()
@@ -44,10 +50,23 @@ async def lifespan(app: FastAPI):
         logger.info("Shutting down...")
 
 
+
+
+
 app = FastAPI(lifespan=lifespan, docs_url=DOCS_URL, redoc_url=REDOC_URL)
+
+admin = Admin(
+    app,
+    engine,
+    base_url=ADMIN_URL,
+    title="Blog Admin Panel",
+    logo_url=LOGO_URL,
+    favicon_url=LOGO_URL
+)
 
 # Add the middleware to the app
 app.add_middleware(BaseHTTPMiddleware, dispatch=log_middle)
+app.add_middleware(AdminAuthMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -56,6 +75,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# Admin routes
+admin.add_view(UserAdmin)
+admin.add_view(BlogAdmin)
+admin.add_view(CategoriesAdmin)
 
 app.include_router(blog.router)
 app.include_router(auth.router)

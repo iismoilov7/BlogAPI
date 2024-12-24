@@ -10,6 +10,7 @@ async def get_article_by_id(db: AsyncSession, id: str):
 
 async def create_article_by_id(
     db: AsyncSession,
+    preview_url: str,
     title_ru: str,
     title_en: str,
     content_ru: str,
@@ -18,6 +19,7 @@ async def create_article_by_id(
     user_id: str,
 ):
     stmt = insert(Blog).values(
+        preview_url=preview_url,
         title_ru=title_ru,
         title_en=title_en,
         content_ru=content_ru,

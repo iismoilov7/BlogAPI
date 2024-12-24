@@ -48,6 +48,7 @@ async def get_article(
     
     article_response = Aritcle(
         id=article.id,
+        preview_url=article.preview_url,
         title=title,
         content=content,
         created_at=article.created_at.strftime("%Y-%m-%d %H:%M:%S"),
@@ -88,6 +89,7 @@ async def create_article(
     try:
         await create_article_by_id(
             db,
+            article.preview_url,
             article.title_ru,
             article.title_en,
             article.content_ru,
@@ -132,6 +134,7 @@ async def get_articles(
         
         article_response = Aritcle(
             id=article.id,
+            preview_url=article.preview_url,
             title=title,
             content=content,
             created_at=article.created_at.strftime("%Y-%m-%d %H:%M:%S"),

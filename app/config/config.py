@@ -12,6 +12,7 @@ JWT_ALGORITHM = "HS256"
 JWT_PRIVATE_KEY_PATH = BASE_DIR / "certs" / "jwt-private.pem"
 JWT_PUBLIC_KEY_PATH = BASE_DIR / "certs" / "jwt-public.pem"
 ACCESS_TOKEN_EXPIRES_MINUTES = timedelta(days=7)
+LOGO_URL = "https://goodallvinyl.com/cdn/shop/products/Bat_in_the_Sun_Purple.png?v=1663898648&width=1946"
 SALT = os.getenv("SALT")
 
 # Configure CORS origins based on the environment
@@ -22,6 +23,7 @@ if ENV == "dev":
     DOCS_URL = "/docs"
     REDOC_URL = "/redoc"
     PORT = 7777
+    ADMIN_URL = "/admin"
 else:
     ORIGINS = [
         "https://ismoil.site/"  # Add your specific frontend origin
@@ -31,3 +33,4 @@ else:
     DOCS_URL = None
     REDOC_URL = None
     PORT = 8000
+    ADMIN_URL = "/super-secret-path"
