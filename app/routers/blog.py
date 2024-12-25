@@ -11,6 +11,7 @@ from app.database.blog import (
     get_category_by_id,
     create_category,
     update_category_articles,
+    get_categories
 )
 from app.database.auth import get_user_by_id
 from app.models.blog import CreateArticle, Aritcle, User, Articles, CreateCategory
@@ -19,7 +20,7 @@ router = APIRouter()
 
 
 @router.get("/blog/{article_id}")
-async def get_article(
+async def getArticle(
     article_id: int,
     lng: str = Query(default="en"),
     db: AsyncSession = Depends(get_db),
@@ -65,22 +66,36 @@ async def get_article(
     return article_response
 
 
-@router.post("/blog/create")
-async def create_article(
+@router.post("/blog/article/create")
+async def createArticle(
     request: Request,
     response: Response,
     article: CreateArticle,
     db: AsyncSession = Depends(get_db),
 ):
-    access_token = await request.app.state.security.get_access_token_from_request(
-        request
-    )
+    try:
+        access_token = await request.app.state.security.get_access_token_from_request(
+            request
+        )
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(403, "Invalid token")
 
     if access_token is None:
         raise HTTPException(401, "Unauthorized")
 
     try:
         data = request.app.state.security.verify_token(access_token, verify_csrf=False)
+        user = await get_user_by_id(db, data.sub)
+        is_published = False
+
+        if user.role != "admin" and user.role != "owner":
+            raise HTTPException(403, "Forbidden")
+
+        if user.role == "owner":
+            is_published = True
+        
+        
     except Exception as e:
         logger.error(e)
         response.delete_cookie(key="access_token")
@@ -96,6 +111,7 @@ async def create_article(
             article.content_en,
             article.category_id,
             data.sub,
+            is_published
         )
         
         await update_category_articles(db, article.category_id)
@@ -106,7 +122,7 @@ async def create_article(
 
 
 @router.get("/blog")
-async def get_articles(
+async def getArticles(
     lng: str = Query(default="en"),
     offset: int = Query(default=0, ge=0),
     count: int = Query(default=10, ge=0),
@@ -136,7 +152,7 @@ async def get_articles(
             id=article.id,
             preview_url=article.preview_url,
             title=title,
-            content=content,
+            content=content[:100]+"...",
             created_at=article.created_at.strftime("%Y-%m-%d %H:%M:%S"),
             updated_at=article.updated_at.strftime("%Y-%m-%d %H:%M:%S"),
             category_name=category_name,
@@ -163,15 +179,19 @@ async def get_articles(
 
 
 @router.post("/blog/category/add")
-async def add_category(
+async def addCategory(
     request: Request,
     response: Response,
     category_data: CreateCategory,
     db: AsyncSession = Depends(get_db),
 ):
-    access_token = await request.app.state.security.get_access_token_from_request(
-        request
-    )
+    try:
+        access_token = await request.app.state.security.get_access_token_from_request(
+            request
+        )
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(403, "Invalid token")
 
     if access_token is None:
         raise HTTPException(401, "Unauthorized")
@@ -187,6 +207,36 @@ async def add_category(
         return {
             "category_id": category_id
             }
+    except Exception as e:
+        logger.error(e)
+        response.delete_cookie(key="access_token")
+        raise HTTPException(403, "Invalid token")
+
+
+@router.get("/blog/category/get")
+async def getCategories(
+    request: Request,
+    response: Response,
+    lng: str = Query(default="en"),
+    db: AsyncSession = Depends(get_db),
+):
+    
+    try:
+        access_token = await request.app.state.security.get_access_token_from_request(
+            request
+        )
+    except Exception as e:
+        logger.error(e)
+        raise HTTPException(403, "Invalid token")
+    
+    if access_token is None:
+        raise HTTPException(401, "Unauthorized")
+
+    try:
+        data = request.app.state.security.verify_token(access_token, verify_csrf=False)
+
+        categories = await get_categories(db)
+        return [{"name": category.name_ru if lng == "ru" else category.name_en, "id": category.id} for category in categories]
     except Exception as e:
         logger.error(e)
         response.delete_cookie(key="access_token")

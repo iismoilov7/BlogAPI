@@ -3,7 +3,7 @@ from sqlalchemy import select, insert, update
 from app.database.schema import Blog, Categories
 
 async def get_article_by_id(db: AsyncSession, id: str):
-    stmt = select(Blog).where(Blog.id == id)
+    stmt = select(Blog).where(Blog.id == id and Blog.is_published == True)
     result = await db.execute(stmt)
     return result.scalar()
 
@@ -17,6 +17,7 @@ async def create_article_by_id(
     content_en: str,
     category_id: int,
     user_id: str,
+    is_published: bool = False
 ):
     stmt = insert(Blog).values(
         preview_url=preview_url,
@@ -26,13 +27,14 @@ async def create_article_by_id(
         content_en=content_en,
         category_id=category_id,
         user_id=user_id,
+        is_published=is_published
     )
     await db.execute(stmt)
     await db.commit()
 
 
 async def get_latest_articles(db: AsyncSession, offset: int, count: int):
-    stmt = select(Blog).order_by(Blog.created_at.desc()).offset(offset).limit(count)
+    stmt = select(Blog).order_by(Blog.created_at.desc()).offset(offset).limit(count).where(Blog.is_published == True)
     result = await db.execute(stmt)
     return result.scalars().all()
 
@@ -59,3 +61,9 @@ async def update_category_articles(db: AsyncSession, id: int):
     stmt = update(Categories).where(Categories.id == id).values(articles_length=Categories.articles_length + 1)
     await db.execute(stmt)    
     await db.commit()
+
+
+async def get_categories(db: AsyncSession):
+    stmt = select(Categories)
+    result = await db.execute(stmt)
+    return result.scalars().all()

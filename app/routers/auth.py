@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from loguru import logger
 
 from app.database.auth import get_user_by_username, update_user, get_user_by_id
-from app.models.auth import LoginCreadentials, TokenInfo, UserInfo
+from app.models.auth import LoginCreadentials, UserInfo
 from app.database.db import get_db
 from app.utils.security import check_password
 
@@ -28,7 +28,12 @@ async def login(
         
         await update_user(db, current_user.user_id, request.client.host)
         
-        return TokenInfo(access_token=access_token)
+        return UserInfo(
+                username=current_user.username,
+                name=current_user.name,
+                picture_url=current_user.picture_url,
+                role=current_user.role
+            )
     else:
         raise HTTPException(403, "Invalid credentials")
 

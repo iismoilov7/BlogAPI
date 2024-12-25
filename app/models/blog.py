@@ -26,7 +26,7 @@ class Aritcle(BaseModel):
     created_at: str
     updated_at: str
     category_name: str
-    user: User
+    user: User;
 
 class Articles(BaseModel):
     articles: list[Aritcle]
