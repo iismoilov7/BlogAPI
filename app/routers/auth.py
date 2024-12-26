@@ -24,16 +24,24 @@ async def login(
 
     if check_password(user.password, current_user.password_hash.encode("utf-8")):
         access_token = request.app.state.security.create_access_token(current_user.user_id)
-        response.set_cookie(key="access_token", value=access_token)
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            samesite='None',
+            secure=True
+        )
         
         await update_user(db, current_user.user_id, request.client.host)
         
-        return UserInfo(
-                username=current_user.username,
-                name=current_user.name,
-                picture_url=current_user.picture_url,
-                role=current_user.role
-            )
+        return {"user": 
+                UserInfo(
+                    username=current_user.username,
+                    name=current_user.name,
+                    picture_url=current_user.picture_url,
+                    role=current_user.role
+                )
+            }
     else:
         raise HTTPException(403, "Invalid credentials")
 
