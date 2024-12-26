@@ -28,9 +28,8 @@ else:
     ORIGINS = [
         "https://ismoil.site",  # Add your specific frontend origin
     	"http://ismoil.site",
-	"https://api.ismoil.site",
-	"http://api.ismoil.site",
-	"http://localhost:5173"
+        "https://api.ismoil.site",
+        "http://api.ismoil.site"
     ]
     HOST = "0.0.0.0"
     DEBUG = False
