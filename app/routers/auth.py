@@ -34,7 +34,8 @@ async def login(
         
         await update_user(db, current_user.user_id, request.client.host)
         
-        return {"user": 
+        return {
+            "user": 
                 UserInfo(
                     username=current_user.username,
                     name=current_user.name,
