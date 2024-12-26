@@ -22,15 +22,19 @@ if ENV == "dev":
     DEBUG = True
     DOCS_URL = "/docs"
     REDOC_URL = "/redoc"
-    PORT = 7777
+    PORT = 8080
     ADMIN_URL = "/admin"
 else:
     ORIGINS = [
-        "https://ismoil.site/"  # Add your specific frontend origin
+        "https://ismoil.site",  # Add your specific frontend origin
+    	"http://ismoil.site",
+	"https://api.ismoil.site",
+	"http://api.ismoil.site",
+	"http://localhost:5173"
     ]
     HOST = "0.0.0.0"
     DEBUG = False
     DOCS_URL = None
     REDOC_URL = None
-    PORT = 8000
-    ADMIN_URL = "/super-secret-path"
+    PORT = 8080
+    ADMIN_URL = "/jessy"
