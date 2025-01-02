@@ -58,10 +58,10 @@ app = FastAPI(lifespan=lifespan, docs_url=DOCS_URL, redoc_url=REDOC_URL)
 admin = Admin(
     app,
     engine,
-    base_url=ADMIN_URL,
+    base_url="https://ismoil.site/admin",
     title="Blog Admin Panel",
     logo_url=LOGO_URL,
-    favicon_url=LOGO_URL
+    favicon_url=LOGO_URL,
 )
 
 # Add the middleware to the app
@@ -72,7 +72,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTION", "DELETE"],
     allow_headers=["*"],
 )
 # Admin routes

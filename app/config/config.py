@@ -22,8 +22,8 @@ if ENV == "dev":
     DEBUG = True
     DOCS_URL = "/docs"
     REDOC_URL = "/redoc"
-    PORT = 8080
-    ADMIN_URL = "/admin"
+    PORT = 8081
+    ADMIN_URL = os.getenv("ADMIN_URL")
 else:
     ORIGINS = [
         "https://ismoil.site",  # Add your specific frontend origin
@@ -36,4 +36,4 @@ else:
     DOCS_URL = None
     REDOC_URL = None
     PORT = 8080
-    ADMIN_URL = "/jessy"
+    ADMIN_URL = os.getenv("ADMIN_URL")

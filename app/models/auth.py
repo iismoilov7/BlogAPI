@@ -10,3 +10,7 @@ class UserInfo(BaseModel):
     name: str
     picture_url: str
     role: Literal["user", "admin", "owner"]
+
+class TokenInfo(BaseModel):
+    access_token: str
+    user: UserInfo

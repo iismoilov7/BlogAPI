@@ -209,7 +209,6 @@ async def addCategory(
             }
     except Exception as e:
         logger.error(e)
-        response.delete_cookie(key="access_token")
         raise HTTPException(403, "Invalid token")
 
 
@@ -239,5 +238,4 @@ async def getCategories(
         return [{"name": category.name_ru if lng == "ru" else category.name_en, "id": category.id} for category in categories]
     except Exception as e:
         logger.error(e)
-        response.delete_cookie(key="access_token")
         raise HTTPException(403, "Invalid token")
